@@ -1,252 +1,161 @@
 <!DOCTYPE html>
-<html lang="ko" id="html-root">
+<html lang="ko">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Bella · Cruise Nomad</title>
-<meta name="description" content="Living between oceans & cities. Cruise Nomad Bella's journey.">
 <style>
   :root {
-    /* 벨라님의 시그니처 컬러 시스템 */
-    --primary-blue: #1B3A5C;    /* 깊은 바다색 */
-    --accent-gold: #D4A94A;     /* 노을빛 골드 */
-    --bg-sand: #F5F2ED;        /* 모래사장 베이지 */
-    --santorini-blue: #87CEEB;  /* 산토리니 블루 */
-    --text-dark: #333333;
-    --text-light: #888888;
+    --primary-blue: #1B3A5C;
+    --accent-gold: #D4A94A;
+    --bg-sand: #F5F2ED;
+    --santorini-blue: #87CEEB;
   }
 
   body { 
-    margin: 0; 
-    padding: 0; 
-    background: var(--bg-sand); 
-    min-height: 100dvh; 
-    -webkit-tap-highlight-color: transparent;
-    padding-top: 70px; /* 헤더 공간 확보 */
-    color: var(--text-dark);
-    line-height: 1.6;
-  }
-  
-  /* Language Toggle - 고정형 최상단 */
-  .lang-toggle {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 1000;
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
-    border-bottom: 1px solid rgba(27, 58, 92, 0.1);
-    padding: 14px 16px;
-    display: flex;
-    justify-content: center;
-    gap: 12px;
-  }
-  
-  .lang-btn {
-    font-family: inherit;
-    font-size: 13px;
-    font-weight: 600;
-    padding: 8px 20px;
-    border: 1.5px solid #E8E2D7;
-    background: white;
-    color: var(--text-light);
-    border-radius: 25px;
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-  }
-  
-  .lang-btn.active {
-    background: var(--primary-blue);
-    color: var(--accent-gold);
-    border-color: var(--primary-blue);
-    box-shadow: 0 4px 12px rgba(27, 58, 92, 0.2);
+    margin: 0; padding: 0; background: var(--bg-sand); 
+    font-family: 'G마켓산스', 'Noto Sans KR', sans-serif;
+    color: #333; line-height: 1.6; word-break: keep-all;
   }
 
-  /* 컨텐츠 표시 로직 */
-  .en-content { display: none; }
-  body.en .ko-content { display: none; }
-  body.en .en-content { display: block; }
+  section { max-width: 600px; margin: 0 auto 30px; padding: 40px 20px; box-sizing: border-box; }
 
-  /* 섹션 공통 스타일 */
-  section {
-    max-width: 650px;
-    margin: 0 auto 40px;
-    padding: 40px 20px;
-    box-sizing: border-box;
-  }
-
-  /* Journey Section - 타임라인 강조 */
-  .journey-header h2 {
-    color: var(--primary-blue);
-    font-size: 28px;
-    text-align: center;
-    margin-bottom: 8px;
-  }
-  .journey-header .subtitle {
-    text-align: center;
-    color: var(--text-light);
-    margin-bottom: 30px;
-  }
+  /* Journey Section */
+  .journey-header { text-align: center; margin-bottom: 25px; }
+  .journey-header h2 { color: var(--primary-blue); font-size: 26px; margin: 0; }
+  .subtitle { color: #888; font-size: 14px; }
 
   .this-month {
-    background: var(--primary-blue);
-    padding: 35px 25px;
-    border-radius: 24px;
-    text-align: center;
-    margin-bottom: 25px;
-    position: relative;
-    overflow: hidden;
+    background: var(--primary-blue); color: white; padding: 30px;
+    border-radius: 20px; text-align: center; margin-bottom: 20px;
   }
   .inaugural-tag {
-    display: inline-block;
-    background: var(--accent-gold);
-    color: white;
-    font-size: 11px;
-    padding: 4px 12px;
-    border-radius: 50px;
-    margin-top: 15px;
+    display: inline-block; background: var(--accent-gold);
+    color: white; font-size: 11px; padding: 4px 12px; border-radius: 50px; margin-top: 10px;
   }
 
-  .month-list { list-style: none; padding: 0; background: white; border-radius: 20px; padding: 10px; }
-  .month-list li {
-    display: flex;
-    padding: 20px 15px;
-    border-bottom: 1px solid #F5F2ED;
-    gap: 20px;
-  }
+  .month-list { list-style: none; padding: 0; background: white; border-radius: 20px; overflow: hidden; }
+  .month-list li { display: flex; padding: 15px 20px; border-bottom: 1px solid #eee; gap: 15px; }
   .month-list li:last-child { border-bottom: none; }
-  .month-label { font-weight: 800; color: var(--accent-gold); min-width: 50px; }
-  .month-mood { font-size: 15px; flex: 1; }
-  
-  li.current {
-    background: #F0F7FF;
-    border-radius: 15px;
-    border-left: 5px solid var(--accent-gold);
-  }
+  .month-label { font-weight: bold; color: var(--accent-gold); min-width: 45px; }
+  .current { background: #f0f7ff; border-left: 5px solid var(--accent-gold); }
 
-  /* Nomad Grid - 이미지 균형 */
-  .nomad-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 8px;
-    margin-bottom: 40px;
+  /* About Nomad & Images */
+  .nomad-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 30px; }
+  .nomad-grid-item { 
+    aspect-ratio: 1; background: #ddd; border-radius: 12px; overflow: hidden; 
+    display: flex; align-items: center; justify-content: center;
   }
-  .nomad-grid-item img {
-    width: 100%;
-    aspect-ratio: 1;
-    object-fit: cover;
-    border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-  }
+  .nomad-grid-item img { width: 100%; height: 100%; object-fit: cover; }
 
-  /* 스토리 타임라인 모바일 최적화 */
-  .story-section-chapter {
-    display: flex;
-    gap: 15px;
-    margin-bottom: 10px;
+  .nomad-axis {
+    background: white; padding: 25px; border-radius: 15px; text-align: center;
+    margin-bottom: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);
   }
+  .nomad-icon { font-size: 30px; margin-bottom: 10px; }
+
+  /* My Story Timeline */
+  .story-timeline { padding: 10px; }
+  .story-chapter { display: flex; gap: 15px; }
   .ch-marker { display: flex; flex-direction: column; align-items: center; }
   .ch-dot { width: 12px; height: 12px; background: var(--accent-gold); border-radius: 50%; }
-  .ch-line { width: 2px; flex: 1; background: #E8E2D7; margin: 5px 0; }
-  .ch-content { padding-bottom: 30px; flex: 1; }
+  .ch-line { width: 2px; flex: 1; background: #ddd; margin: 5px 0; }
+  .ch-content { padding-bottom: 30px; }
+  .ch-content h4 { margin: 0 0 8px 0; color: var(--primary-blue); }
 
-  /* 반응형 조정 */
-  @media (max-width: 480px) {
-    .journey-header h2 { font-size: 24px; }
-    .this-month { padding: 25px 15px; }
-    .month-mood { font-size: 14px; }
+  /* CTA Button */
+  .cc-button {
+    display: block; background: var(--accent-gold); color: white;
+    text-align: center; padding: 18px; border-radius: 50px;
+    text-decoration: none; font-weight: bold; margin-top: 20px;
+    box-shadow: 0 4px 15px rgba(212, 169, 74, 0.3);
   }
 </style>
 </head>
 <body>
 
-<div class="lang-toggle">
-  <button class="lang-btn active" data-lang="ko" onclick="switchLang('ko')">🇰🇷 한국어</button>
-  <button class="lang-btn" data-lang="en" onclick="switchLang('en')">🇺🇸 English</button>
-</div>
-
-<!-- 한국어 컨텐츠 -->
-<div class="ko-content">
-  <section class="journey-section">
+  <!-- Journey Section -->
+  <section>
     <div class="journey-header">
       <h2>🗓️ A Year in My Life</h2>
-      <p class="subtitle">한국과 세계를 무대로 살아가는 크루즈 노마드</p>
+      <p class="subtitle">크루즈 노마드 벨라의 1년</p>
     </div>
 
     <div class="this-month">
-      <span style="color: var(--accent-gold); font-weight: bold; letter-spacing: 1px;">✈️ NOW TRAVELING</span>
-      <h3 style="color: white; font-size: 28px; margin: 10px 0;">May 2026</h3>
-      <p style="color: #ddd; margin: 0;">Disney Adventure 🛳️</p>
-      <div class="inaugural-tag">✨ <첫 시즌> Inaugural Season</div>
+      <div style="color: var(--accent-gold); font-size: 11px; font-weight: bold; letter-spacing: 2px; margin-bottom: 10px;">✈️ NOW TRAVELING</div>
+      <h3 style="margin: 0; font-size: 24px;">May 2026</h3>
+      <p style="margin: 5px 0 0; color: #E8E2D7;">Disney Adventure 🛳️</p>
+      <div class="inaugural-tag">✨ Inaugural Season</div>
     </div>
 
     <ul class="month-list">
-      <li><span class="month-label">APR</span><span class="month-mood">동남아 워케이션 ☀️</span></li>
-      <li class="current">
-        <span class="month-label">MAY</span>
-        <span class="month-mood">🏰 디즈니 크루즈 / 🍰 베네치아 / 🛳️ 이비자 크루즈</span>
-      </li>
-      <li><span class="month-label">JUN</span><span class="month-mood">🛳️ 지중해 (그리스·터키) 크루즈</span></li>
-      <li><span class="month-label">JUL</span><span class="month-mood">🛳️ 미국 바하마 & 캐리비안 크루즈</span></li>
-      <li><span class="month-label">SEP</span><span class="month-mood">🌍 동유럽 (부다페스트 & 세르비아)</span></li>
-      <li><span class="month-label">OCT</span><span class="month-mood">🛳️ 서지중해 (이·스·프) 크루즈</span></li>
+      <li><span class="month-label">APR</span><span>동남아 워케이션 ☀️</span></li>
+      <li class="current"><span class="month-label">MAY</span><span>🏰 디즈니 크루즈 / 🍰 베네치아 / 🛳️ 이비자</span></li>
+      <li><span class="month-label">JUN</span><span>🛳️ 지중해 그리스·터키 크루즈</span></li>
+      <li><span class="month-label">JUL</span><span>🛳️ 미국 바하마·캐리비안 크루즈</span></li>
+      <li><span class="month-label">SEP</span><span>🌍 동유럽 부다페스트 & 세르비아</span></li>
+      <li><span class="month-label">OCT</span><span>🛳️ 이탈리아·스페인·프랑스 크루즈</span></li>
     </ul>
   </section>
 
-  <section class="about-nomad-section">
+  <!-- About Nomad (사진 영역) -->
+  <section>
     <div class="nomad-grid">
-        <!-- 이미지 경로는 나중에 벨라님의 실제 사진 URL로 교체하세요 -->
-      <div class="nomad-grid-item"><img src="https://via.placeholder.com/200x200/1B3A5C/D4A94A?text=Bella1" alt="Bella"></div>
-      <div class="nomad-grid-item"><img src="https://via.placeholder.com/200x200/1B3A5C/D4A94A?text=Cruise" alt="Cruise"></div>
-      <div class="nomad-grid-item"><img src="https://via.placeholder.com/200x200/1B3A5C/D4A94A?text=Office" alt="Workation"></div>
+      <!-- 💡 여기에 벨라님의 실제 사진 주소를 넣으세요 -->
+      <div class="nomad-grid-item">
+        <img src="https://images.unsplash.com/photo-1548574505-5e239809ee19?w=400" alt="크루즈">
+      </div>
+      <div class="nomad-grid-item">
+        <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=400" alt="노트북">
+      </div>
+      <div class="nomad-grid-item">
+        <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=400" alt="바다">
+      </div>
     </div>
-    <div style="text-align: center;">
-        <p style="color: var(--accent-gold); font-weight: bold; font-size: 12px; letter-spacing: 2px;">HOW I LIVE</p>
-        <h2 style="color: var(--primary-blue);">크루즈 노마드의 하루</h2>
-        <p>어제는 푸켓, 오늘은 지중해. 노트북 하나로 완성되는 자유로운 일상.</p>
+
+    <div class="nomad-axis">
+      <div class="nomad-icon">🌅</div>
+      <h4>매일 바뀌는 풍경</h4>
+      <p style="font-size: 14px; color: #666;">어제는 푸켓, 오늘은 지중해. 창밖이 매일 설레는 일상</p>
+    </div>
+    <div class="nomad-axis">
+      <div class="nomad-icon">💻</div>
+      <h4>어디서나 나의 오피스</h4>
+      <p style="font-size: 14px; color: #666;">노트북 하나면 전 세계 어디든 나의 사무실이 됩니다</p>
     </div>
   </section>
 
-  <!-- My Story & Coffee Chat 생략 (구조는 동일하게 유지) -->
-  <section style="text-align: center; background: white; border-radius: 20px; padding: 40px 20px;">
-      <h3 style="color: var(--primary-blue);">☕ Bella와 커피 한 잔</h3>
-      <p>자유로운 삶의 시스템을 구축하는 방법, 함께 이야기해요.</p>
-      <a href="https://open.kakao.com/o/sbJudavg" 
-         style="display: inline-block; background: var(--accent-gold); color: white; padding: 15px 30px; border-radius: 50px; text-decoration: none; font-weight: bold; margin-top: 20px;">
-         오픈카톡 상담하기
-      </a>
+  <!-- My Story -->
+  <section>
+    <h3 style="text-align: center; color: var(--primary-blue); margin-bottom: 30px;">제 자유를 찾게 된 이야기</h3>
+    <div class="story-timeline">
+      <div class="story-chapter">
+        <div class="ch-marker"><div class="ch-dot"></div><div class="ch-line"></div></div>
+        <div class="ch-content">
+          <h4>Chapter 1. 7급 공무원</h4>
+          <p style="font-size: 14px; color: #555;">안정적이었지만 가슴 뛰는 설렘은 없던 평범한 직장인이었습니다.</p>
+        </div>
+      </div>
+      <div class="story-chapter">
+        <div class="ch-marker"><div class="ch-dot"></div><div class="ch-line"></div></div>
+        <div class="ch-content">
+          <h4>Chapter 2. 사표, 그리고 도전</h4>
+          <p style="font-size: 14px; color: #555;">정해진 답을 벗어나 나만의 길을 가기로 결심했습니다.</p>
+        </div>
+      </div>
+      <div class="story-chapter">
+        <div class="ch-marker"><div class="ch-dot" style="background: var(--primary-blue);"></div></div>
+        <div class="ch-content">
+          <h4>NOW. 크루즈 노마드</h4>
+          <p style="font-size: 14px; color: #555;">지금 저는 바다 위에서 세계를 누비며 자유롭게 일합니다.</p>
+        </div>
+      </div>
+    </div>
+
+    <a href="https://open.kakao.com/o/sbJudavg" class="cc-button">
+      🚢 벨라와 커피 한 잔 (오픈카톡)
+    </a>
   </section>
-</div>
 
-<!-- 영어 컨텐츠 (내용은 벨라님 원본과 동일하게 채우시면 됩니다) -->
-<div class="en-content">
-    <section>
-        <h2 style="text-align: center; color: var(--primary-blue);">🗓️ A Year in My Life</h2>
-        <p style="text-align: center; color: var(--text-light);">Cruise Nomad Life: Boundaryless</p>
-        <!-- 영어 타임라인... -->
-    </section>
-</div>
-
-<script>
-  window.switchLang = function(lang) {
-    const body = document.body;
-    const buttons = document.querySelectorAll('.lang-btn');
-    
-    if (lang === 'en') {
-      body.classList.add('en');
-    } else {
-      body.classList.remove('en');
-    }
-    
-    buttons.forEach(btn => {
-      btn.classList.toggle('active', btn.dataset.lang === lang);
-    });
-    
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-</script>
 </body>
 </html>
